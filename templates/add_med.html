@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h3>💊 إضافة دواء جديد</h3>
+
+    <form method="POST" action="/med/add/{{ batch_id }}">
+        <div class="mb-3">
+            <label class="form-label">التاريخ</label>
+            <input type="date" name="date" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">اسم الدواء</label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">الهدف / الاستخدام</label>
+            <input type="text" name="purpose" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">السعر (ج.م)</label>
+            <input type="number" step="0.01" name="price" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">حفظ</button>
+        <a href="/batch/{{ batch_id }}" class="btn btn-secondary">رجوع</a>
+    </form>
+</div>
+{% endblock %}

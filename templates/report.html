@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block content %}
+    <h3 class="mb-3">📊 تقرير الدفعة: {{ batch['name'] }}</h3>
+
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="card p-3">
+          <div class="muted">📅 تاريخ البدء</div>
+          <h5 class="mt-1">{{ batch['start_date'] }}</h5>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3">
+          <div class="muted">🐣 عدد الكتاكيت</div>
+          <h5 class="mt-1">{{ batch['initial_count'] }}</h5>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3">
+          <div class="muted">💸 سعر الفرخة الواحدة</div>
+          <h5 class="mt-1">{{ batch['chick_price'] }} ج.م</h5>
+        </div>
+      </div>
+    </div>
+
+    <h5 class="mt-4 mb-2">💰 تفاصيل المصروفات</h5>
+    <div class="table-responsive p-2">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>البند</th>
+            <th>القيمة (ج.م)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>تكلفة الفراخ</td>
+            <td>{{ chicks_total }}</td>
+          </tr>
+          <tr>
+            <td>إجمالي العلف</td>
+            <td>{{ feed_total }}</td>
+          </tr>
+          <tr>
+            <td>إجمالي الأدوية</td>
+            <td>{{ meds_total }}</td>
+          </tr>
+          <tr>
+            <td>مصروفات إضافية</td>
+            <td>{{ extra_total }}</td>
+          </tr>
+          <tr class="table-secondary">
+            <td><strong>الإجمالي الكلي</strong></td>
+            <td><strong>{{ total_expenses }}</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h5 class="mt-4 mb-2">📦 ملخص الحالة</h5>
+    <div class="card p-3">
+      <div class="row">
+        <div class="col-md-3"><strong>إجمالي النافق:</strong> {{ total_mortality }}</div>
+        <div class="col-md-3"><strong>إجمالي المباع:</strong> {{ total_sold_qty }}</div>
+        <div class="col-md-3"><strong>وزن المباع (كجم):</strong> {{ '%.2f'|format(total_sold_weight) }}</div>
+        <div class="col-md-3"><strong>المتبقي (تقديري):</strong> {{ birds_remaining }}</div>
+      </div>
+    </div>
+
+    <h5 class="mt-4 mb-2">💵 الإيرادات المسجلة</h5>
+    <div class="card p-3">
+      <div><strong>إجمالي المبيعات المسجلة:</strong> {{ '%.2f'|format(sales_total or 0) }} ج.م</div>
+      <div><strong>صافي الربح/الخسارة (من المبيعات المسجلة):</strong> {{ '%.2f'|format((sales_total or 0) - total_expenses) }} ج.م</div>
+    </div>
+
+    <h5 class="mt-4 mb-2">🧮 تقدير الإيرادات والربح (للمتبقي أو سيناريو افتراضي)</h5>
+    <div class="card p-3">
+      <form method="post">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">متوسط الوزن (كجم)</label>
+            <input type="number" step="0.01" min="0" name="average_weight_kg" class="form-control" value="{{ average_weight_kg if average_weight_kg is not none else '' }}" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">سعر الكيلو (ج.م)</label>
+            <input type="number" step="0.01" min="0" name="price_per_kg" class="form-control" value="{{ price_per_kg if price_per_kg is not none else '' }}" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">النافق</label>
+            <input type="number" step="1" min="0" max="{{ batch['initial_count'] }}" name="mortality_count" class="form-control" value="{{ mortality_count if mortality_count is not none else 0 }}">
+          </div>
+        </div>
+        <div class="mt-3 text-center">
+          <button type="submit" class="btn btn-success">حساب</button>
+        </div>
+      </form>
+    </div>
+
+    {% if revenue_estimate is not none %}
+    <div class="card p-3 mt-3">
+      <div class="row">
+        <div class="col-md-3"><strong>العدد المستخدم في التقدير:</strong> {{ birds_available }} طائر</div>
+        <div class="col-md-3"><strong>إيراد تقديري:</strong> {{ '%.2f'|format(revenue_estimate) }} ج.م</div>
+        <div class="col-md-3"><strong>إجمالي المصروفات:</strong> {{ '%.2f'|format(total_expenses) }} ج.م</div>
+        <div class="col-md-3"><strong>الربح/الخسارة التقديرية:</strong> {{ '%.2f'|format(profit_estimate) }} ج.م</div>
+      </div>
+    </div>
+    {% endif %}
+
+    <h5 class="mt-4 mb-2">📈 رسوم بيانية</h5>
+    <div class="card p-3">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <canvas id="expensesChart" height="160"></canvas>
+        </div>
+        <div class="col-md-6">
+          <canvas id="salesVsExpensesChart" height="160"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <a href="{{ url_for('view_batch', batch_id=batch['id']) }}" class="btn btn-secondary">⬅️ رجوع</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const rtl = true;
+      // Expenses breakdown (Doughnut)
+      const expCtx = document.getElementById('expensesChart').getContext('2d');
+      new Chart(expCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['تكلفة الفراخ', 'العلف', 'الأدوية', 'مصروفات إضافية'],
+          datasets: [{
+            data: [{{ chicks_total|default(0) }}, {{ feed_total|default(0) }}, {{ meds_total|default(0) }}, {{ extra_total|default(0) }}],
+            backgroundColor: ['#0ea5e9','#84cc16','#f59e0b','#a855f7'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } },
+          maintainAspectRatio: false
+        }
+      });
+
+      // Sales vs Expenses (Bar)
+      const seCtx = document.getElementById('salesVsExpensesChart').getContext('2d');
+      new Chart(seCtx, {
+        type: 'bar',
+        data: {
+          labels: ['المبيعات', 'المصروفات'],
+          datasets: [{
+            label: 'ج.م',
+            data: [{{ (sales_total or 0)|default(0) }}, {{ total_expenses|default(0) }}],
+            backgroundColor: ['#22c55e','#ef4444']
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true } },
+          maintainAspectRatio: false
+        }
+      });
+    </script>
+{% endblock %}

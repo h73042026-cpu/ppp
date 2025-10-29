@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إضافة النافق</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>body{background:#f8f9fa}</style>
+  </head>
+<body>
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-dark text-white">إضافة النافق</div>
+    <div class="card-body">
+      <form method="post">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">التاريخ</label>
+            <input type="date" name="date" class="form-control" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">العدد</label>
+            <input type="number" name="count" min="0" step="1" class="form-control" required>
+          </div>
+          <div class="col-md-12">
+            <label class="form-label">ملاحظة (اختياري)</label>
+            <input type="text" name="note" class="form-control" placeholder="سبب النافق أو أي تفاصيل">
+          </div>
+        </div>
+        <div class="mt-3 text-center">
+          <button type="submit" class="btn btn-success">حفظ</button>
+          <a href="{{ url_for('view_batch', batch_id=batch_id) }}" class="btn btn-secondary">رجوع</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+

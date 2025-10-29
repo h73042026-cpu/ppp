@@ -97,7 +97,7 @@
     </div>
 
     {% if revenue_estimate is not none %}
-    <div class="card p-3 mt-3">
+    <div class="card p-3 mt-3" id="calculationResults">
       <div class="row">
         <div class="col-md-3"><strong>العدد المستخدم في التقدير:</strong> {{ birds_available }} طائر</div>
         <div class="col-md-3"><strong>إيراد تقديري:</strong> {{ '%.2f'|format(revenue_estimate) }} ج.م</div>
@@ -125,6 +125,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+      // Scroll to results if they exist
+      document.addEventListener('DOMContentLoaded', function() {
+        const resultsSection = document.getElementById('calculationResults');
+        if (resultsSection) {
+          resultsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+
       const rtl = true;
       // Expenses breakdown (Doughnut)
       const expCtx = document.getElementById('expensesChart').getContext('2d');

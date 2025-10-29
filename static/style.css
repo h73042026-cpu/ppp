@@ -347,6 +347,42 @@ main, .content-wrapper {
     color: var(--text);
 }
 
+/* Batch Details Header */
+.batch-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.batch-title {
+    font-size: 1.75rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    display: block;
+    text-align: center;
+}
+
+.batch-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.batch-actions .btn {
+    min-width: 120px;
+    margin: 0.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.batch-actions .btn i {
+    font-size: 1.1em;
+}
+
 .stat-card .label {
     font-size: 0.875rem;
     color: var(--muted);

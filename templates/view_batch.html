@@ -50,7 +50,7 @@
             <table class="table table-hover table-sm align-middle">
               <thead>
                 <tr>
-                  <th>التاريخ</th>
+                  <th class="date-col">التاريخ</th>
                   <th>النوع</th>
                   <th>الكمية</th>
                   <th>السعر</th>
@@ -60,7 +60,7 @@
               <tbody>
                 {% for f in feeds %}
                 <tr>
-                  <td>{{ f['date'] }}</td>
+                  <td class="date-col">{{ f['date'] }}</td>
                   <td>{{ f['feed_type'] }}</td>
                   <td>{{ f['quantity'] }}</td>
                   <td>{{ f['price'] }}</td>
@@ -93,7 +93,7 @@
             <table class="table table-hover table-sm align-middle">
               <thead>
                 <tr>
-                  <th>التاريخ</th>
+                  <th class="date-col">التاريخ</th>
                   <th>الاسم</th>
                   <th>السبب</th>
                   <th>السعر</th>
@@ -103,7 +103,7 @@
               <tbody>
                 {% for m in meds %}
                 <tr>
-                  <td>{{ m['date'] }}</td>
+                  <td class="date-col">{{ m['date'] }}</td>
                   <td>{{ m['name'] }}</td>
                   <td>{{ m['purpose'] }}</td>
                   <td>{{ m['price'] }}</td>
@@ -136,7 +136,7 @@
             <table class="table table-hover table-sm align-middle">
               <thead>
                 <tr>
-                  <th>التاريخ</th>
+                  <th class="date-col">التاريخ</th>
                   <th>الاسم</th>
                   <th>السعر</th>
                   <th class="text-nowrap">إجراءات</th>
@@ -145,7 +145,7 @@
               <tbody>
                 {% for e in extras %}
                 <tr>
-                  <td>{{ e['date'] }}</td>
+                  <td class="date-col">{{ e['date'] }}</td>
                   <td>{{ e['name'] }}</td>
                   <td>{{ e['price'] }}</td>
                   <td>
@@ -177,7 +177,7 @@
             <table class="table table-hover table-sm align-middle">
               <thead>
                 <tr>
-                  <th>التاريخ</th>
+                  <th class="date-col">التاريخ</th>
                   <th>العدد</th>
                   <th>ملاحظة</th>
                   <th class="text-nowrap">إجراءات</th>
@@ -186,7 +186,7 @@
               <tbody>
                 {% for d in mortalities %}
                 <tr>
-                  <td>{{ d['date'] }}</td>
+                  <td class="date-col">{{ d['date'] }}</td>
                   <td>{{ d['count'] }}</td>
                   <td>{{ d['note'] }}</td>
                   <td>
@@ -218,7 +218,7 @@
             <table class="table table-hover table-sm align-middle">
               <thead>
                 <tr>
-                  <th>التاريخ</th>
+                  <th class="date-col">التاريخ</th>
                   <th>الكمية</th>
                   <th>وزن إجمالي (كجم)</th>
                   <th>سعر/كجم</th>
@@ -229,7 +229,7 @@
               <tbody>
                 {% for s in sales %}
                 <tr>
-                  <td>{{ s['date'] }}</td>
+                  <td class="date-col">{{ s['date'] }}</td>
                   <td>{{ s['quantity'] }}</td>
                   <td>{{ '%.2f'|format(s['total_weight_kg']) }}</td>
                   <td>{{ '%.2f'|format(s['price_per_kg']) }}</td>

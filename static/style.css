@@ -712,3 +712,32 @@ select.form-control {
   }
 }
 
+/* تحسين قائمة البرجر RTL للموبايل */
+@media (max-width: 992px) {
+  .navbar-collapse {
+    text-align: right;
+    background: var(--card);
+    padding: 1.5rem 1rem 1rem 1rem;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    position: absolute;
+    top: var(--header-height);
+    right: 0;
+    left: 0;
+    z-index: 1050;
+    box-shadow: var(--shadow-lg);
+  }
+  .navbar-nav {
+    flex-direction: column!important;
+    align-items: flex-end!important;
+    width: 100%;
+  }
+  .navbar-nav .nav-item {
+    width: 100%;
+  }
+  .navbar-nav .nav-link {
+    width: 100%;
+    text-align: right;
+    padding-right: 1rem;
+  }
+}
+

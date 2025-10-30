@@ -62,7 +62,7 @@
                 <tr>
                   <td class="date-col">{{ f['date'] }}</td>
                   <td>{{ f['feed_type'] }}</td>
-                  <td>{{ f['quantity'] }} كجم</td>
+                  <td class="date-col">{{ f['quantity'] }} كجم</td>
                   <td>{{ f['price'] }}</td>
                   <td>
                     <a href="{{ url_for('edit_feed', id=f['id'], batch_id=batch['id']) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>

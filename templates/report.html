@@ -17,7 +17,7 @@
       </div>
       <div class="col-md-4">
         <div class="card p-3">
-          <div class="muted">💸 سعر الفرخة الواحدة</div>
+          <div class="muted">💸 سعر الكتكوت الواحد</div>
           <h5 class="mt-1">{{ batch['chick_price'] }} ج.م</h5>
         </div>
       </div>
@@ -70,7 +70,7 @@
     <h5 class="mt-4 mb-2">💵 الإيرادات المسجلة</h5>
     <div class="card p-3">
       <div><strong>إجمالي المبيعات المسجلة:</strong> {{ '%.2f'|format(sales_total or 0) }} ج.م</div>
-      <div><strong>صافي الربح/الخسارة (من المبيعات المسجلة):</strong> {{ '%.2f'|format((sales_total or 0) - total_expenses) }} ج.م</div>
+      <div><strong>صافي الربح/الخسارة :</strong> {{ '%.2f'|format((sales_total or 0) - total_expenses) }} ج.م</div>
     </div>
 
     <h5 class="mt-4 mb-2">🧮 تقدير الإيرادات والربح (للمتبقي أو سيناريو افتراضي)</h5>

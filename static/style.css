@@ -688,3 +688,23 @@ select.form-control {
   }
 }
 
+/* Actions layout: row on larger screens, 2x2 grid on small screens */
+.actions-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+@media (max-width: 576px) {
+  .actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    justify-items: center;
+  }
+  .actions-grid .btn {
+    width: 100%;
+  }
+}
+

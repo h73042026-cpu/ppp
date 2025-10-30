@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="mt-4">
+  <a href="{{ url_for('view_batch', batch_id=batch['id']) }}" class="btn btn-secondary">⬅️ رجوع</a>
+</div>
+
     <h3 class="mb-3">📊 تقرير الدفعة: {{ batch['name'] }}</h3>
 
     <div class="row g-3">
@@ -119,9 +123,7 @@
       </div>
     </div>
 
-    <div class="mt-4">
-      <a href="{{ url_for('view_batch', batch_id=batch['id']) }}" class="btn btn-secondary">⬅️ رجوع</a>
-    </div>
+   
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>

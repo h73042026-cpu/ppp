@@ -35,14 +35,14 @@
 <div class="table-responsive p-2">
 <table class="table table-hover align-middle text-center">
     <thead class="table-success">
-        <tr><th>الاسم</th><th>السلالة</th><th style="width: 150px !important;">تاريخ البداية</th><th>عدد الكتاكيت</th><th>إجراءات</th></tr>
+        <tr><th>الاسم</th><th>السلالة</th><th class="date-col" style="width: 150px !important;">تاريخ البداية</th><th>عدد الكتاكيت</th><th>إجراءات</th></tr>
     </thead>
     <tbody>
         {% for b in batches %}
         <tr>
             <td>{{ b['name'] }}</td>
             <td>{{ b['breed'] }}</td>
-            <td style="width: 150px;">{{ b['start_date'] }}</td>
+            <td class="date-col" style="width: 150px;">{{ b['start_date'] }}</td>
             <td>{{ b['initial_count'] }}</td>
             <td>
                 <a href="{{ url_for('view_batch', batch_id=b['id']) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>

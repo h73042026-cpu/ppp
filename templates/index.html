@@ -1,25 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="row g-3">
-  <div class="col-md-3">
-    <div class="card stat-card text-center p-3">
-      <div class="muted">عدد الدفعات</div>
-      <h3 class="mt-1">{{ total_batches }}</h3>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card stat-card text-center p-3">
-      <div class="muted">إجمالي الكتاكيت</div>
-      <h3 class="mt-1">{{ total_chicks }}</h3>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card stat-card text-center p-3">
-      <div class="muted">إجمالي المصروفات</div>
-      <h3 class="mt-1">{{ '%.2f'|format(total_expenses) }} ج.م</h3>
-    </div>
-  </div>
-  <div class="col-md-3">
+  <div class="col-12">
     <div class="card text-center p-3">
       <div class="muted">إجراء جديد</div>
       <a href="{{ url_for('add_batch') }}" class="btn btn-success mt-2"><i class="bi bi-plus-circle"></i> إضافة دفعة</a>

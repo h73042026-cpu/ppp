@@ -101,10 +101,29 @@ def init_db():
 # =========================
 @app.route("/")
 def index():
+    from datetime import datetime
     conn = get_db()
     c = conn.cursor()
     c.execute("SELECT * FROM batches")
-    batches = c.fetchall()
+    rows = c.fetchall()
+
+    # build list of dicts and compute age in days for each batch
+    batches = []
+    now = datetime.now().date()
+    for r in rows:
+        b = dict(r)
+        start = b.get('start_date')
+        age = None
+        if start:
+            try:
+                # expect YYYY-MM-DD format
+                start_date = datetime.strptime(start, '%Y-%m-%d').date()
+                age = (now - start_date).days
+            except Exception:
+                # if parsing fails, leave age as None
+                age = None
+        b['age'] = age
+        batches.append(b)
 
     # Dashboard quick stats
     c.execute("SELECT COUNT(*) FROM batches")

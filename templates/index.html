@@ -12,27 +12,41 @@
 {% if batches %}
 <div class="table-responsive p-2">
 <table class="table table-hover align-middle text-center">
-    <thead class="table-success">
-        <tr><th>الاسم</th><th>السلالة</th><th class="date-col" style="width: 150px !important;">تاريخ البداية</th><th>عدد الكتاكيت</th><th>إجراءات</th></tr>
-    </thead>
-    <tbody>
-        {% for b in batches %}
-        <tr>
-            <td>{{ b['name'] }}</td>
-            <td>{{ b['breed'] }}</td>
-            <td class="date-col" style="width: 150px;">{{ b['start_date'] }}</td>
-            <td>{{ b['initial_count'] }}</td>
-            <td>
-    <div class="actions-grid">
-        <a href="{{ url_for('view_batch', batch_id=b['id']) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
-        <a href="{{ url_for('edit_batch', batch_id=b['id']) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
-        <a href="{{ url_for('report', batch_id=b['id']) }}" class="btn btn-sm btn-outline-info"><i class="bi bi-graph-up"></i></a>
-        <a href="{{ url_for('delete_batch', batch_id=b['id']) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('هل أنت متأكد من حذف هذه الدفعة وجميع بياناتها؟');"><i class="bi bi-trash"></i></a>
-    </div>
-</td>
-        </tr>
-        {% endfor %}
-    </tbody>
+  <thead class="table-success">
+    <tr>
+      <th>الاسم</th>
+      <th>السلالة</th>
+      <th class="date-col" style="width: 150px !important;">تاريخ البداية</th>
+      <th>عدد الكتاكيت</th>
+      <th>عمر الدورة</th>
+      <th>إجراءات</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for b in batches %}
+    <tr>
+      <td>{{ b['name'] }}</td>
+      <td>{{ b['breed'] }}</td>
+      <td class="date-col" style="width: 150px;">{{ b['start_date'] }}</td>
+      <td>{{ b['initial_count'] }}</td>
+      <td>
+        {% if b['age'] is not none %}
+          <span class="batch-age">{{ b['age'] }} يوم</span>
+        {% else %}
+          <span class="muted">--</span>
+        {% endif %}
+      </td>
+      <td>
+        <div class="actions-grid">
+          <a href="{{ url_for('view_batch', batch_id=b['id']) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
+          <a href="{{ url_for('edit_batch', batch_id=b['id']) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
+          <a href="{{ url_for('report', batch_id=b['id']) }}" class="btn btn-sm btn-outline-info"><i class="bi bi-graph-up"></i></a>
+          <a href="{{ url_for('delete_batch', batch_id=b['id']) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('هل أنت متأكد من حذف هذه الدفعة وجميع بياناتها؟');"><i class="bi bi-trash"></i></a>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
  </div>
 {% else %}

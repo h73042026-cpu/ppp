@@ -32,6 +32,11 @@
             <label class="form-label">سعر الكتكوت </label>
             <input type="number" name="chick_price" min="0" step="0.01" class="form-control" value="{{ batch['chick_price'] }}" required>
           </div>
+          <div class="col-md-3">
+            <label class="form-label">تاريخ الانتهاء (اختياري)</label>
+            <input type="date" name="end_date" class="form-control" value="{{ batch['end_date'] if batch['end_date'] else '' }}">
+          </div>
+          
         </div>
         <div class="mt-3 text-center">
           <button type="submit" class="btn btn-success">حفظ</button>

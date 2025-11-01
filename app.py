@@ -36,6 +36,20 @@ def init_db():
         chick_price REAL DEFAULT 0
     )''')
 
+    # ensure new columns exist for backward compatibility
+    c.execute("PRAGMA table_info(batches)")
+    cols = [row[1] for row in c.fetchall()]
+    if 'is_completed' not in cols:
+        try:
+            c.execute("ALTER TABLE batches ADD COLUMN is_completed INTEGER DEFAULT 0")
+        except Exception:
+            pass
+    if 'end_date' not in cols:
+        try:
+            c.execute("ALTER TABLE batches ADD COLUMN end_date TEXT DEFAULT NULL")
+        except Exception:
+            pass
+
     # جدول العلف
     c.execute('''CREATE TABLE IF NOT EXISTS feed (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -113,14 +127,24 @@ def index():
     for r in rows:
         b = dict(r)
         start = b.get('start_date')
+        end = b.get('end_date')
+        is_completed = b.get('is_completed')
         age = None
         if start:
             try:
-                # expect YYYY-MM-DD format
                 start_date = datetime.strptime(start, '%Y-%m-%d').date()
-                age = (now - start_date).days
+                # if an end date is provided use it to compute a fixed age
+                if end:
+                    try:
+                        end_date = datetime.strptime(end, '%Y-%m-%d').date()
+                        age = (end_date - start_date).days
+                    except Exception:
+                        # fallback to now if end date cannot be parsed
+                        age = (now - start_date).days
+                else:
+                    # no end date -> compute age up to today
+                    age = (now - start_date).days
             except Exception:
-                # if parsing fails, leave age as None
                 age = None
         b['age'] = age
         batches.append(b)
@@ -537,9 +561,13 @@ def edit_batch(batch_id):
         start_date = request.form["start_date"]
         initial_count = int(request.form.get("initial_count", 0) or 0)
         chick_price = float(request.form.get("chick_price", 0) or 0)
+        # handle completion and optional end date
+        end_date = request.form.get("end_date") or None
+        # if user provided an end date, treat batch as completed as well
+        is_completed = 1 if request.form.get("is_completed") or end_date else 0
         c.execute(
-            "UPDATE batches SET name=?, breed=?, start_date=?, initial_count=?, chick_price=? WHERE id=?",
-            (name, breed, start_date, initial_count, chick_price, batch_id),
+            "UPDATE batches SET name=?, breed=?, start_date=?, initial_count=?, chick_price=?, is_completed=?, end_date=? WHERE id=?",
+            (name, breed, start_date, initial_count, chick_price, is_completed, end_date, batch_id),
         )
         conn.commit()
         conn.close()

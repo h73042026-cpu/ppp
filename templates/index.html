@@ -16,7 +16,7 @@
     <tr>
       <th>الاسم</th>
       <th>السلالة</th>
-      <th class="date-col" style="width: 150px !important;">تاريخ البداية</th>
+      <th  style="width: 200px !important;">تاريخ البداية</th>
       <th>عدد الكتاكيت</th>
       <th>عمر الدورة</th>
       <th>إجراءات</th>
@@ -37,12 +37,15 @@
         {% endif %}
       </td>
       <td>
-        <div class="actions-grid">
+        
+        <div class="btn-group actions-grid" role="group" aria-label="إجراءات الدفعة">
           <a href="{{ url_for('view_batch', batch_id=b['id']) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
           <a href="{{ url_for('edit_batch', batch_id=b['id']) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
+        
           <a href="{{ url_for('report', batch_id=b['id']) }}" class="btn btn-sm btn-outline-info"><i class="bi bi-graph-up"></i></a>
           <a href="{{ url_for('delete_batch', batch_id=b['id']) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('هل أنت متأكد من حذف هذه الدفعة وجميع بياناتها؟');"><i class="bi bi-trash"></i></a>
         </div>
+        
       </td>
     </tr>
     {% endfor %}

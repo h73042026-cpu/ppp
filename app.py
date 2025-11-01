@@ -572,7 +572,7 @@ def edit_batch(batch_id):
         conn.commit()
         conn.close()
         flash("✅ تم تحديث بيانات الدفعة", "success")
-        return redirect(url_for("view_batch", batch_id=batch_id))
+        return redirect(url_for("index", batch_id=batch_id))
     c.execute("SELECT * FROM batches WHERE id=?", (batch_id,))
     batch = c.fetchone()
     conn.close()

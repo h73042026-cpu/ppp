@@ -675,3 +675,16 @@ select.form-control {
     }
 }
 
+@media (max-width: 768px) {
+
+    .table td.date-col,
+    .table th.date-col {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        max-width: 130px;
+        overflow-x: auto;
+        text-overflow: ellipsis;
+        direction: ltr;
+        text-align: center;
+    }
+}
